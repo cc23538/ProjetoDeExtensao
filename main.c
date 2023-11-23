@@ -222,13 +222,14 @@ int verificarMes(int mes) {
     return (mes >= 1 && mes <= 12);
 }
 
+
 int verificarDia(int dia, int mes, int ano, int ano_atual, int mes_atual, int dia_atual) {
     if (dia < 1 || dia > 31) {
         return 0;  // Dia inválido
     }
 
     if ((ano == ano_atual && mes == mes_atual && dia <= dia_atual) || (ano == ano_atual && mes < mes_atual)) {
-      printf("\n\033[1;31mNão é possível agendar para uma data que já passou ou é o dia de hoje.\033[0m\n");
+      printf("\n\033[1;31mNão é possível agendar!\nA data que já passou ou é o dia de hoje.\033[0m\n");
         return 0;  // Data inválida
     }
 
@@ -291,14 +292,14 @@ void adicionarDias(int **diasAgendados, int *numDiasAgendados, int *capacidadeAt
 
     for (int i = 0; i < dias; i++) {
         while (1) {
-            printf("Digite o dia a ser agendado (entre 1 e 31): ");
+            printf("Digite o %d° dia a ser agendado (entre 1 e 31): ", i+1);
             scanf("%d", &(*diasAgendados)[*numDiasAgendados]);
 
             if (verificarDia((*diasAgendados)[*numDiasAgendados], 0, 0, 0, 0, 0)) {
                 (*numDiasAgendados)++;
                 break;
             } else {
-              printf("\033[1;31m\nDia inválido ou data já passou ou é o dia de hoje.\033[0m\n");
+              printf("\033[1;31m\nDia inválido!\nA data já passou ou é o dia de hoje.\033[0m\n\n");
             }
         }
     }
@@ -359,7 +360,7 @@ void agendarNoCalendario() {
     destacarDiasSelecionados(mes, ano, diasAgendados, numDiasAgendados);
 
     // Adicionar mais dias
-    printf("\nDeseja adicionar mais dias ao calendário? (1 - Sim / 0 - Não): ");
+    printf("\nDeseja agendar uma nova diária ao calendário? (1 - Sim / 0 - Não): ");
     int opcao;
     scanf("%d", &opcao);
 
@@ -374,7 +375,7 @@ void agendarNoCalendario() {
         printf("=============================================\n\033[0m");
         destacarDiasSelecionados(mes, ano, diasAgendados, numDiasAgendados);
 
-        printf("\nDeseja adicionar mais dias ao calendário? (1 - Sim / 0 - Não): ");
+        printf("\nDeseja adicionar uma nova diária ao calendário? (1 - Sim / 0 - Não): ");
         scanf("%d", &opcao);
     }
 
@@ -397,7 +398,7 @@ void calendario()
         }
         else
         {
-            printf("Ano inv�lido.\n");
+          printf("\033[1;31mAno inválido.\n\033[0m");
         }
     }
 
@@ -412,7 +413,7 @@ void calendario()
         }
         else
         {
-            printf("M�s inv�lido.\n");
+          printf("\033[1;31mMês inválido.\n\033[0m");
         }
     }
 
@@ -863,6 +864,7 @@ void salvarItem(const char *item, const char *nomeCliente)
 int main()
 {
     setlocale(LC_ALL, "Portuguese");
+    
 
     // Defina os dados do usuario.
     struct Usuario usuarios[2];
